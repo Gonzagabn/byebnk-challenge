@@ -1,8 +1,10 @@
+import 'package:byebnk_app/providers/auth.dart';
 import 'package:byebnk_app/screens/authentication_screen.dart';
 import 'package:byebnk_app/screens/investments_and_redemptions_screen.dart';
 import 'package:byebnk_app/screens/transactions_and_balance_screen.dart';
 import 'package:byebnk_app/utils/app_routes.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(MyApp());
@@ -11,15 +13,22 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'byebnk',
-      theme: ThemeData(primaryColor: Colors.black),
-      debugShowCheckedModeBanner: false,
-      routes: {
-        AppRoutes.AUTH: (ctx) => AuthenticationScreen(),
-        AppRoutes.TXNS_BAL: (ctx) => TransactionsAndBalanceScreen(),
-        AppRoutes.INVS_REDS: (ctx) => InvestmentsAndRedemptionsScreen(),
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(
+          create: (ctx) => new Auth(),
+        ),
+      ],
+      child: MaterialApp(
+        title: 'byebnk',
+        theme: ThemeData(primaryColor: Colors.black),
+        debugShowCheckedModeBanner: false,
+        routes: {
+          AppRoutes.AUTH: (ctx) => AuthenticationScreen(),
+          AppRoutes.TXNS_BAL: (ctx) => TransactionsAndBalanceScreen(),
+          AppRoutes.INVS_REDS: (ctx) => InvestmentsAndRedemptionsScreen(),
+        },
+      ),
     );
   }
 }
