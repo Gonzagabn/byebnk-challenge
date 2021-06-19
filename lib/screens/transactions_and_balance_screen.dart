@@ -8,28 +8,34 @@ class TransactionsAndBalanceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final transactionsData = Provider.of<Transactions>(context);
-    final transactions = transactionsData.transactions;
-
     return Scaffold(
       appBar: AppBar(
         title: Text('Movimentações e Saldo'),
       ),
-      body: Column(
-        children: <Widget>[
-          Padding(
-            padding: EdgeInsets.all(8),
-            child: ListView.builder(
-              itemCount: transactionsData.transactionsCount,
-              itemBuilder: (ctx, index) => Column(
-                children: <Widget>[
-                  TransactionItem(transactions[index]),
-                  Divider(),
-                ],
-              ),
-            ),
-          ),
-        ],
+      body: FutureBuilder(
+        future: Provider.of<Transactions>(context, listen: false)
+            .loadTransactions(),
+        builder: (ctx, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(
+              child: CircularProgressIndicator(color: Colors.black),
+            );
+          } else {
+            return Consumer<Transactions>(
+              builder: (ctx, txns, cild) {
+                return ListView.builder(
+                  itemCount: txns.transactionsCount,
+                  itemBuilder: (ctx, index) => Column(
+                    children: <Widget>[
+                      TransactionItem(txns.transactions[index]),
+                      Divider(),
+                    ],
+                  ),
+                );
+              },
+            );
+          }
+        },
       ),
     );
   }

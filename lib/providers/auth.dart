@@ -32,11 +32,11 @@ class Auth with ChangeNotifier {
       }),
     );
 
-    final responseBody = json.decode(response.body);
-    if (responseBody['errors'] != null) {
-      throw AuthException(responseBody['errors']);
+    final data = json.decode(response.body);
+    if (data['errors'] != null) {
+      throw AuthException(data['errors']);
     } else {
-      _token = responseBody['token'];
+      _token = data['token'];
 
       notifyListeners();
     }

@@ -8,7 +8,7 @@ import 'package:http/http.dart' as http;
 
 class Transaction {
   final String type;
-  final DateTime date;
+  final String date;
   final double value;
 
   Transaction({
@@ -32,20 +32,26 @@ class Transactions with ChangeNotifier {
 
   Future<void> loadTransactions() async {
     final url = Uri.parse(Constants.TXNS_URL);
-
     final response = await http.get(
       url,
       headers: {"Authorization": _token!},
     );
 
-    final responseBody = json.decode(response.body);
-    if (responseBody['errors'] != null) {
-      throw ApiException(responseBody['errors']);
-    } else {
-      notifyListeners();
-    }
-
-    print(responseBody);
+    final List<dynamic> txnsData;
+    final dynamic data = json.decode(response.body);
+    if (data ==
+        'Fake error to test how your application can handle unexpected events') {
+      throw ApiException(data);
+    } else
+      txnsData = data['movimentacoes'];
+    txnsData.forEach((txnData) {
+      _transactions.add(Transaction(
+        type: txnData['tipo'],
+        date: txnData['data'],
+        value: txnData['valor'],
+      ));
+    });
+    notifyListeners();
 
     return Future.value();
   }

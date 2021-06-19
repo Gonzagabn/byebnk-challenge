@@ -1,6 +1,7 @@
 class ApiException implements Exception {
-  static const Map<int, String> errors = {
-    500: 'Houve um erro FAKE inesperado! Tente novamente',
+  static const Map<String, String> error = {
+    'Fake error to test how your application can handle unexpected events':
+        'Houve um erro FAKE inesperado! Tente novamente',
   };
   final String msg;
 
