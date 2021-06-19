@@ -1,3 +1,4 @@
+import 'package:byebnk_app/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:byebnk_app/providers/transactions.dart';
@@ -19,6 +20,20 @@ class TransactionsAndBalanceScreen extends StatelessWidget {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
               child: CircularProgressIndicator(color: Colors.black),
+            );
+          } else if (snapshot.hasError) {
+            return AlertDialog(
+              title: Text('Ocorreu um erro!'),
+              content: Text('Ocorreu um erro FAKE!'),
+              actions: <Widget>[
+                TextButton(
+                  child: Text('Fechar'),
+                  onPressed: () {
+                    Navigator.of(context)
+                        .pushReplacementNamed(AppRoutes.TXNS_BAL);
+                  },
+                )
+              ],
             );
           } else {
             return Consumer<Transactions>(
