@@ -2,21 +2,16 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:byebnk_app/data/store.dart';
-import 'package:byebnk_app/exceptions/auth_exceptions.dart';
+import 'package:byebnk_app/exceptions/api_exceptions.dart';
 import 'package:byebnk_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
 class Auth with ChangeNotifier {
-  String? _userId;
   String? _token;
 
   bool get isAuth {
     return token != null;
-  }
-
-  String? get userId {
-    return isAuth ? _userId : null;
   }
 
   String? get token {
@@ -33,28 +28,25 @@ class Auth with ChangeNotifier {
 
     final response = await http.post(
       url,
+      headers: {"Content-Type": "application/json"},
       body: json.encode({
         'username': email,
         'password': password,
       }),
     );
 
-    print(response.body);
+    final responseBody = json.decode(response.body);
+    if (responseBody['error'] != null) {
+      throw ApiException(responseBody['error']);
+    } else {
+      _token = responseBody['token'];
 
-    // final responseBody = json.decode(response.body);
-    // if (responseBody['error'] != null) {
-    //   throw AuthException(responseBody['error']['message']);
-    // } else {
-    //   _token = responseBody['idToken'];
-    //   _userId = responseBody['localId'];
+      Store.saveMap('userData', {
+        'token': _token,
+      });
 
-    //   Store.saveMap('userData', {
-    //     'token': _token,
-    //     'userId': _userId,
-    //   });
-
-    //   notifyListeners();
-    // }
+      notifyListeners();
+    }
 
     return Future.value();
   }
@@ -65,7 +57,6 @@ class Auth with ChangeNotifier {
 
   void logout() {
     _token = null;
-    _userId = null;
     Store.remove('userData');
     notifyListeners();
   }
