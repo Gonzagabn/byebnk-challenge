@@ -1,4 +1,6 @@
+import 'package:byebnk_app/providers/auth.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class AuthCard extends StatefulWidget {
   const AuthCard({Key? key}) : super(key: key);
@@ -16,7 +18,7 @@ class _AuthCardState extends State<AuthCard> {
   bool _isLoading = false;
   final _passwordController = TextEditingController();
 
-  void _submit() {
+  Future<void> _submit() async {
     if (!_form.currentState!.validate()) {
       return;
     }
@@ -25,6 +27,10 @@ class _AuthCardState extends State<AuthCard> {
     });
 
     _form.currentState!.save();
+
+    Auth auth = Provider.of(context, listen: false);
+
+    await auth.login(_authData['email']!, _authData['password']!);
 
     setState(() {
       _isLoading = false;
@@ -79,7 +85,7 @@ class _AuthCardState extends State<AuthCard> {
                     controller: _passwordController,
                     obscureText: true,
                     validator: (value) {
-                      if (value!.isEmpty || value.length < 6) {
+                      if (value!.isEmpty || value.length < 4) {
                         return 'Informe uma senha válida!';
                       }
                       return null;
