@@ -9,11 +9,11 @@ class InvestmentsAndRedemptionsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Aplicações e Resgates'),
       ),
-      body: Center(
-        child: Container(
-          height: 400,
-          width: 400,
-        ),
+      body: Column(
+        children: <Widget>[
+          Card(),
+          Card(),
+        ],
       ),
     );
   }
