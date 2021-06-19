@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:byebnk_app/exceptions/http_exceptions.dart';
 import 'package:byebnk_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -40,9 +39,7 @@ class Transactions with ChangeNotifier {
 
     final List<dynamic> txnsData;
     final dynamic data = json.decode(response.body);
-    if (response.statusCode == 500) {
-      throw HttpException(response.statusCode.toString());
-    } else if (data != null) {
+    if (data != null) {
       txnsData = data['movimentacoes'];
       txnsData.forEach((txnData) {
         _loadedTransactions.add(Transaction(
