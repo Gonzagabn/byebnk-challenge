@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:byebnk_app/exceptions/api_exceptions.dart';
+import 'package:byebnk_app/exceptions/http_exceptions.dart';
 import 'package:byebnk_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -41,7 +41,7 @@ class Transactions with ChangeNotifier {
     final dynamic data = json.decode(response.body);
     if (data ==
         'Fake error to test how your application can handle unexpected events') {
-      throw ApiException(data);
+      throw HttpException(data);
     } else
       txnsData = data['movimentacoes'];
     txnsData.forEach((txnData) {
