@@ -1,4 +1,3 @@
-import 'package:byebnk_app/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 
 class AuthCard extends StatefulWidget {
@@ -10,8 +9,27 @@ class AuthCard extends StatefulWidget {
 
 class _AuthCardState extends State<AuthCard> {
   GlobalKey<FormState> _form = GlobalKey();
+  Map<String, String> _authData = {
+    'email': '',
+    'password': '',
+  };
   bool _isLoading = false;
   final _passwordController = TextEditingController();
+
+  void _submit() {
+    if (!_form.currentState!.validate()) {
+      return;
+    }
+    setState(() {
+      _isLoading = true;
+    });
+
+    _form.currentState!.save();
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +52,7 @@ class _AuthCardState extends State<AuthCard> {
             borderRadius: BorderRadius.circular(10.0),
           ),
           child: Container(
-            height: availableHeight * 0.35,
+            height: availableHeight * 0.36,
             width: availableWidth * 0.75,
             padding: EdgeInsets.all(16),
             child: Form(
@@ -52,7 +70,7 @@ class _AuthCardState extends State<AuthCard> {
                       }
                       return null;
                     },
-                    onSaved: (v) {},
+                    onSaved: (value) => _authData['email'] = value!,
                   ),
                   TextFormField(
                     decoration: InputDecoration(
@@ -66,7 +84,7 @@ class _AuthCardState extends State<AuthCard> {
                       }
                       return null;
                     },
-                    onSaved: (v) {},
+                    onSaved: (value) => _authData['password'] = value!,
                   ),
                   Spacer(),
                   if (_isLoading)
@@ -91,9 +109,7 @@ class _AuthCardState extends State<AuthCard> {
                         ),
                       ),
                       child: Text('ENTRAR'),
-                      onPressed: () {
-                        Navigator.of(context).pushNamed(AppRoutes.TXNS_BAL);
-                      },
+                      onPressed: _submit,
                     ),
                 ],
               ),
