@@ -26,6 +26,10 @@ class Transactions with ChangeNotifier {
 
   List<Transaction> get transactions => [..._transactions];
 
+  int get transactionsCount {
+    return _transactions.length;
+  }
+
   Future<void> loadTransactions() async {
     final url = Uri.parse(Constants.TXNS_URL);
 
