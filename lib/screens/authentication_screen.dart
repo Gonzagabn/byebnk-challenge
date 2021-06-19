@@ -7,8 +7,14 @@ class AuthenticationScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Center(
-        child: AuthCard(),
+      body: SingleChildScrollView(
+        child: Container(
+          height: MediaQuery.of(context).size.height,
+          color: Colors.black,
+          child: Center(
+            child: AuthCard(),
+          ),
+        ),
       ),
     );
   }
