@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:byebnk_app/data/store.dart';
-import 'package:byebnk_app/exceptions/api_exceptions.dart';
+import 'package:byebnk_app/exceptions/auth_exceptions.dart';
 import 'package:byebnk_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
@@ -36,8 +36,9 @@ class Auth with ChangeNotifier {
     );
 
     final responseBody = json.decode(response.body);
-    if (responseBody['error'] != null) {
-      throw ApiException(responseBody['error']);
+    print(responseBody);
+    if (responseBody['errors'] != null) {
+      throw AuthException(responseBody['errors']);
     } else {
       _token = responseBody['token'];
 

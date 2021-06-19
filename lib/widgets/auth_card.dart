@@ -1,3 +1,4 @@
+import 'package:byebnk_app/exceptions/auth_exceptions.dart';
 import 'package:byebnk_app/providers/auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,12 +12,30 @@ class AuthCard extends StatefulWidget {
 
 class _AuthCardState extends State<AuthCard> {
   GlobalKey<FormState> _form = GlobalKey();
+  final _passwordController = TextEditingController();
+  bool _isLoading = false;
   Map<String, String> _authData = {
     'email': '',
     'password': '',
   };
-  bool _isLoading = false;
-  final _passwordController = TextEditingController();
+
+  void _showErrorDialog(String msg) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Ocorreu um erro!'),
+        content: Text(msg),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Fechar'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          )
+        ],
+      ),
+    );
+  }
 
   Future<void> _submit() async {
     if (!_form.currentState!.validate()) {
@@ -30,7 +49,13 @@ class _AuthCardState extends State<AuthCard> {
 
     Auth auth = Provider.of(context, listen: false);
 
-    await auth.login(_authData['email']!, _authData['password']!);
+    try {
+      await auth.login(_authData['email']!, _authData['password']!);
+    } on AuthException catch (error) {
+      _showErrorDialog(error.toString());
+    } catch (error) {
+      _showErrorDialog('Ocorreu um erro inesperado!');
+    }
 
     setState(() {
       _isLoading = false;
