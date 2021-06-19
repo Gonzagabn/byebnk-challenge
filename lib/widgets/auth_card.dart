@@ -1,5 +1,6 @@
 import 'package:byebnk_app/exceptions/auth_exceptions.dart';
 import 'package:byebnk_app/providers/auth.dart';
+import 'package:byebnk_app/utils/app_routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -41,6 +42,7 @@ class _AuthCardState extends State<AuthCard> {
     if (!_form.currentState!.validate()) {
       return;
     }
+
     setState(() {
       _isLoading = true;
     });
@@ -55,6 +57,10 @@ class _AuthCardState extends State<AuthCard> {
       _showErrorDialog(error.toString());
     } catch (error) {
       _showErrorDialog('Ocorreu um erro inesperado!');
+    }
+
+    if (auth.isAuth == true) {
+      Navigator.of(context).pushNamed(AppRoutes.TXNS_BAL);
     }
 
     setState(() {

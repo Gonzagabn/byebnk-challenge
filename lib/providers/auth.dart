@@ -36,7 +36,6 @@ class Auth with ChangeNotifier {
     );
 
     final responseBody = json.decode(response.body);
-    print(responseBody);
     if (responseBody['errors'] != null) {
       throw AuthException(responseBody['errors']);
     } else {
@@ -58,7 +57,9 @@ class Auth with ChangeNotifier {
 
   void logout() {
     _token = null;
+
     Store.remove('userData');
+
     notifyListeners();
   }
 }
