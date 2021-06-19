@@ -1,5 +1,4 @@
 import 'package:byebnk_app/exceptions/auth_exceptions.dart';
-import 'package:byebnk_app/exceptions/http_exceptions.dart';
 import 'package:byebnk_app/providers/auth.dart';
 import 'package:byebnk_app/utils/app_routes.dart';
 import 'package:flutter/material.dart';
