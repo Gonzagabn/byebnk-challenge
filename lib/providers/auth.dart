@@ -1,7 +1,6 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:byebnk_app/data/store.dart';
 import 'package:byebnk_app/exceptions/auth_exceptions.dart';
 import 'package:byebnk_app/utils/constants.dart';
 import 'package:flutter/material.dart';
@@ -24,7 +23,6 @@ class Auth with ChangeNotifier {
 
   Future<void> authenticate(String email, String password) async {
     final url = Uri.parse(Constants.AUTH_URL);
-
     final response = await http.post(
       url,
       headers: {"Content-Type": "application/json"},
@@ -40,10 +38,6 @@ class Auth with ChangeNotifier {
     } else {
       _token = responseBody['token'];
 
-      Store.saveMap('userData', {
-        'token': _token,
-      });
-
       notifyListeners();
     }
 
@@ -52,9 +46,6 @@ class Auth with ChangeNotifier {
 
   void logout() {
     _token = null;
-
-    Store.remove('userData');
-
     notifyListeners();
   }
 }
