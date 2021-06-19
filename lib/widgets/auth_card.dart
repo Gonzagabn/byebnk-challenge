@@ -52,20 +52,20 @@ class _AuthCardState extends State<AuthCard> {
     Auth auth = Provider.of(context, listen: false);
 
     try {
-      await auth.login(_authData['email']!, _authData['password']!);
+      await auth.authenticate(_authData['email']!, _authData['password']!);
     } on AuthException catch (error) {
       _showErrorDialog(error.toString());
     } catch (error) {
       _showErrorDialog('Ocorreu um erro inesperado!');
     }
 
-    if (auth.isAuth == true) {
-      Navigator.of(context).pushNamed(AppRoutes.TXNS_BAL);
-    }
-
     setState(() {
       _isLoading = false;
     });
+
+    if (auth.isAuth == true) {
+      Navigator.of(context).pushNamed(AppRoutes.TXNS_BAL);
+    }
   }
 
   @override

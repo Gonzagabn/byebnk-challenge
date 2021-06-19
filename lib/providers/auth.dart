@@ -22,9 +22,8 @@ class Auth with ChangeNotifier {
     }
   }
 
-  Future<void> _authenticate(
-      String email, String password, String authMethod) async {
-    final url = Uri.parse(authMethod);
+  Future<void> authenticate(String email, String password) async {
+    final url = Uri.parse(Constants.AUTH_URL);
 
     final response = await http.post(
       url,
@@ -49,10 +48,6 @@ class Auth with ChangeNotifier {
     }
 
     return Future.value();
-  }
-
-  Future<void> login(String email, String password) async {
-    return _authenticate(email, password, Constants.AUTH_URL);
   }
 
   void logout() {
