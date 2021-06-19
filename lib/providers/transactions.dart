@@ -31,6 +31,7 @@ class Transactions with ChangeNotifier {
   }
 
   Future<void> loadTransactions() async {
+    List<Transaction> _loadedTransactions = [];
     final url = Uri.parse(Constants.TXNS_URL);
     final response = await http.get(
       url,
@@ -41,17 +42,19 @@ class Transactions with ChangeNotifier {
     final dynamic data = json.decode(response.body);
     if (response.statusCode == 500) {
       throw HttpException(response.statusCode.toString());
-    } else
+    } else if (data != null) {
       txnsData = data['movimentacoes'];
-    txnsData.forEach((txnData) {
-      _transactions.add(Transaction(
-        type: txnData['tipo'],
-        date: txnData['data'],
-        value: txnData['valor'],
-      ));
-    });
+      txnsData.forEach((txnData) {
+        _loadedTransactions.add(Transaction(
+          type: txnData['tipo'],
+          date: txnData['data'],
+          value: txnData['valor'],
+        ));
+      });
+    }
     notifyListeners();
 
+    _transactions = _loadedTransactions;
     return Future.value();
   }
 }
