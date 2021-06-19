@@ -39,9 +39,8 @@ class Transactions with ChangeNotifier {
 
     final List<dynamic> txnsData;
     final dynamic data = json.decode(response.body);
-    if (data ==
-        'Fake error to test how your application can handle unexpected events') {
-      throw HttpException(data);
+    if (response.statusCode == 500) {
+      throw HttpException(response.statusCode.toString());
     } else
       txnsData = data['movimentacoes'];
     txnsData.forEach((txnData) {
