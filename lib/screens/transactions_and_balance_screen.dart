@@ -12,6 +12,10 @@ class TransactionsAndBalanceScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Movimentações e Saldo'),
+        leading: GestureDetector(
+          onTap: () {},
+          child: Icon(Icons.menu),
+        ),
       ),
       body: FutureBuilder(
         future: Provider.of<Transactions>(context, listen: false)
