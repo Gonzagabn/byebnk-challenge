@@ -1,3 +1,4 @@
+import 'package:byebnk_app/widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
 
 class InvestmentsAndRedemptionsScreen extends StatelessWidget {
@@ -13,6 +14,7 @@ class InvestmentsAndRedemptionsScreen extends StatelessWidget {
       appBar: AppBar(
         title: Text('Aplicações e Resgates'),
       ),
+      drawer: AppDrawer(),
       body: SingleChildScrollView(
         child: Container(
           color: Colors.black,
