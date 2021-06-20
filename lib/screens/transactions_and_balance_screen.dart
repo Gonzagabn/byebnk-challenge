@@ -1,4 +1,5 @@
 import 'package:byebnk_app/utils/app_routes.dart';
+import 'package:byebnk_app/widgets/app_drawer.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:byebnk_app/providers/transactions.dart';
@@ -12,11 +13,8 @@ class TransactionsAndBalanceScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Movimentações e Saldo'),
-        leading: GestureDetector(
-          onTap: () {},
-          child: Icon(Icons.menu),
-        ),
       ),
+      drawer: AppDrawer(),
       body: FutureBuilder(
         future: Provider.of<Transactions>(context, listen: false)
             .loadTransactions(),
