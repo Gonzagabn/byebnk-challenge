@@ -1,3 +1,5 @@
+import 'package:byebnk_app/exceptions/http_exceptions.dart';
+import 'package:byebnk_app/providers/investment.dart';
 import 'package:byebnk_app/providers/transactions.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -11,7 +13,52 @@ class InvestmentCard extends StatefulWidget {
 
 class _InvestmentCard extends State<InvestmentCard> {
   GlobalKey<FormState> _form = GlobalKey();
+  bool _isLoading = false;
   double? _invData;
+
+  void _showErrorDialog(String msg) {
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Ocorreu um erro!'),
+        content: Text(msg),
+        actions: <Widget>[
+          TextButton(
+            child: Text('Fechar'),
+            onPressed: () {
+              Navigator.of(context).pop();
+            },
+          )
+        ],
+      ),
+    );
+  }
+
+  Future<void> _submit() async {
+    if (!_form.currentState!.validate()) {
+      return;
+    }
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    _form.currentState!.save();
+
+    Investments invs = Provider.of(context, listen: false);
+
+    try {
+      await invs.investmentRequest(_invData!);
+    } on HttpException catch (error) {
+      _showErrorDialog(error.toString());
+    } catch (error) {
+      _showErrorDialog('Ocorreu um erro inesperado!');
+    }
+
+    setState(() {
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +84,7 @@ class _InvestmentCard extends State<InvestmentCard> {
           ),
         ),
         Container(
-          height: availableHeight * 0.25,
+          height: availableHeight * 0.27,
           width: availableWidth * 0.9,
           child: Card(
             margin: EdgeInsets.zero,
@@ -45,13 +92,18 @@ class _InvestmentCard extends State<InvestmentCard> {
               borderRadius: BorderRadius.circular(10.0),
             ),
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
-                Text(
-                  'Invista Agora!',
-                  style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w500,
+                Padding(
+                  padding: EdgeInsets.only(
+                      left: availableWidth * 0.04, top: availableHeight * 0.02),
+                  child: Text(
+                    'Invista Agora!',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
                 Consumer<Transactions>(
@@ -59,25 +111,57 @@ class _InvestmentCard extends State<InvestmentCard> {
                     return Form(
                       key: _form,
                       child: Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: <Widget>[
-                          Container(
-                            width: availableWidth * 0.7,
-                            child: TextFormField(
-                              decoration: InputDecoration(
-                                labelText: 'Informe o valor a ser aplicado...',
+                          Center(
+                            child: Container(
+                              width: availableWidth * 0.7,
+                              child: TextFormField(
+                                decoration: InputDecoration(
+                                  labelText:
+                                      'Informe o valor a ser aplicado...',
+                                ),
+                                keyboardType: TextInputType.numberWithOptions(
+                                    decimal: true),
+                                validator: (value) {
+                                  if (value!.isEmpty ||
+                                      double.parse(value) == 0.0) {
+                                    return 'Informe um valor válido!';
+                                  }
+                                  return null;
+                                },
+                                onSaved: (value) =>
+                                    _invData = double.parse(value!),
                               ),
-                              keyboardType: TextInputType.numberWithOptions(
-                                  decimal: true),
-                              validator: (value) {
-                                if (double.parse(value!) == 0.0) {
-                                  return 'Informe um valor válido!';
-                                }
-                                return null;
-                              },
-                              onSaved: (value) =>
-                                  _invData = double.parse(value!),
                             ),
                           ),
+                          SizedBox(
+                            height: availableHeight * 0.02,
+                          ),
+                          if (_isLoading)
+                            CircularProgressIndicator(
+                              color: Colors.black,
+                            )
+                          else
+                            ElevatedButton(
+                              style: ButtonStyle(
+                                backgroundColor:
+                                    MaterialStateProperty.all(Colors.black),
+                                shape: MaterialStateProperty.all(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(30),
+                                  ),
+                                ),
+                                padding: MaterialStateProperty.all(
+                                  EdgeInsets.symmetric(
+                                    horizontal: 30.0,
+                                    vertical: 8.0,
+                                  ),
+                                ),
+                              ),
+                              child: Text('APLICAR'),
+                              onPressed: _submit,
+                            ),
                         ],
                       ),
                     );
