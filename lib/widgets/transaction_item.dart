@@ -37,7 +37,6 @@ class TransactionItem extends StatelessWidget {
               ? Colors.green[600]
               : Colors.red[900],
           fontSize: 16,
-          fontWeight: FontWeight.w500,
         ),
       ),
     );
