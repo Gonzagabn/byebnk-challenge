@@ -18,38 +18,55 @@ class _InvestmentCard extends State<InvestmentCard> {
         AppBar().preferredSize.height;
     final availableWidth = mediaQuery.size.width;
 
-    return Container(
-      height: availableHeight * 0.16,
-      width: availableWidth * 0.9,
-      child: Card(
-        margin: EdgeInsets.zero,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(10.0),
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            Text(
-              'SALDO',
+    return Column(
+      children: <Widget>[
+        Container(
+          height: availableHeight * 0.05,
+          child: Center(
+            child: Text(
+              'Deseja fazer uma aplicação?',
               style: TextStyle(
-                fontSize: 24,
+                fontSize: 18,
                 fontWeight: FontWeight.w500,
+                color: Colors.white,
               ),
             ),
-            Consumer<Transactions>(
-              builder: (ctx, txns, cild) {
-                return Text(
-                  'R\$ ${txns.transactionsBalance}',
-                  style: TextStyle(
-                    fontSize: 36,
-                    color: Colors.green[600],
-                  ),
-                );
-              },
-            ),
-          ],
+          ),
         ),
-      ),
+        Container(
+          height: availableHeight * 0.3,
+          width: availableWidth * 0.9,
+          child: Card(
+            margin: EdgeInsets.zero,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0),
+            ),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Text(
+                  'SALDO',
+                  style: TextStyle(
+                    fontSize: 24,
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+                Consumer<Transactions>(
+                  builder: (ctx, txns, cild) {
+                    return Text(
+                      'R\$ ${txns.transactionsBalance}',
+                      style: TextStyle(
+                        fontSize: 36,
+                        color: Colors.green[600],
+                      ),
+                    );
+                  },
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }
