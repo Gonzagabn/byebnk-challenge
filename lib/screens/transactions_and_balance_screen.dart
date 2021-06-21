@@ -44,48 +44,62 @@ class TransactionsAndBalanceScreen extends StatelessWidget {
             ),
           ),
           SingleChildScrollView(
-            child: Container(
-              height: availableHeight * 0.75,
-              width: double.infinity,
-              child: FutureBuilder(
-                future: Provider.of<Transactions>(context, listen: false)
-                    .loadTransactions(),
-                builder: (ctx, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(
-                      child: CircularProgressIndicator(color: Colors.black),
-                    );
-                  } else if (snapshot.hasError) {
-                    return AlertDialog(
-                      title: Text('Ocorreu um erro!'),
-                      content: Text('Ocorreu um erro FAKE!'),
-                      actions: <Widget>[
-                        TextButton(
-                          child: Text('Fechar'),
-                          onPressed: () {
-                            Navigator.of(context)
-                                .pushReplacementNamed(AppRoutes.TXNS_BAL);
-                          },
-                        )
-                      ],
-                    );
-                  } else {
-                    return Consumer<Transactions>(
-                      builder: (ctx, txns, cild) {
-                        return ListView.builder(
-                          itemCount: txns.transactionsCount,
-                          itemBuilder: (ctx, index) => Column(
-                            children: <Widget>[
-                              TransactionItem(txns.transactions[index]),
-                              Divider(),
+            child: Stack(
+              children: <Widget>[
+                Container(
+                  color: Colors.black,
+                  height: availableHeight * 0.75,
+                  width: double.infinity,
+                ),
+                Center(
+                  child: Container(
+                    color: Colors.white,
+                    height: availableHeight * 0.75,
+                    width: availableWidth * 0.9,
+                    child: FutureBuilder(
+                      future: Provider.of<Transactions>(context, listen: false)
+                          .loadTransactions(),
+                      builder: (ctx, snapshot) {
+                        if (snapshot.connectionState ==
+                            ConnectionState.waiting) {
+                          return Center(
+                            child:
+                                CircularProgressIndicator(color: Colors.black),
+                          );
+                        } else if (snapshot.hasError) {
+                          return AlertDialog(
+                            title: Text('Ocorreu um erro!'),
+                            content: Text('Ocorreu um erro FAKE!'),
+                            actions: <Widget>[
+                              TextButton(
+                                child: Text('Fechar'),
+                                onPressed: () {
+                                  Navigator.of(context)
+                                      .pushReplacementNamed(AppRoutes.TXNS_BAL);
+                                },
+                              )
                             ],
-                          ),
-                        );
+                          );
+                        } else {
+                          return Consumer<Transactions>(
+                            builder: (ctx, txns, cild) {
+                              return ListView.builder(
+                                itemCount: txns.transactionsCount,
+                                itemBuilder: (ctx, index) => Column(
+                                  children: <Widget>[
+                                    TransactionItem(txns.transactions[index]),
+                                    Divider(),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        }
                       },
-                    );
-                  }
-                },
-              ),
+                    ),
+                  ),
+                ),
+              ],
             ),
           ),
         ],

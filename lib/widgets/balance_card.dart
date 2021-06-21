@@ -18,26 +18,21 @@ class _BalanceCardState extends State<BalanceCard> {
 
     return Container(
       height: availableHeight * 0.16,
-      width: availableWidth * 0.8,
+      width: availableWidth * 0.9,
       child: Card(
         margin: EdgeInsets.zero,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: <Widget>[
-            SizedBox(
-              height: availableHeight * 0.01,
-            ),
             Text(
               'SALDO',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.w500,
               ),
-            ),
-            SizedBox(
-              height: availableHeight * 0.02,
             ),
             Text(
               'R\$ 28.237,00',
