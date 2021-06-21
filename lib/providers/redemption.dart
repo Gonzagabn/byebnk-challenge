@@ -6,13 +6,21 @@ import 'package:byebnk_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class Redemption with ChangeNotifier {
-  String? _token;
-  DateTime? _date;
-  double? _value;
+class Redemption {
+  DateTime date;
+  double value;
 
-  DateTime get date => _date!;
-  double get value => _value!;
+  Redemption({
+    required this.date,
+    required this.value,
+  });
+}
+
+class Redemptions with ChangeNotifier {
+  String? _token;
+  Redemption? _redemption;
+
+  Redemption? get redemption => _redemption;
 
   Future<void> redemptionRequest(double value) async {
     final url = Uri.parse(Constants.RED_URL);
@@ -31,8 +39,8 @@ class Redemption with ChangeNotifier {
     if (response.statusCode == 500) {
       throw HttpException(response.statusCode.toString());
     } else if (data != null) {
-      _value = data['valor'];
-      _date = data['data'];
+      _redemption!.date = data['valor'];
+      _redemption!.date = data['data'];
     }
     notifyListeners();
 
