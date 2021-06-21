@@ -70,7 +70,7 @@ class Transactions with ChangeNotifier {
       txnsData.forEach((txnData) {
         _loadedTransactions.add(Transaction(
           type: txnData['tipo'],
-          date: txnData['data'],
+          date: DateTime.parse(txnData['data']),
           value: txnData['valor'],
         ));
       });
