@@ -7,20 +7,27 @@ class InvestmentsAndRedemptionsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final availableHeight = mediaQuery.size.height -
+        mediaQuery.padding.top -
+        AppBar().preferredSize.height;
     return Scaffold(
       appBar: AppBar(
         title: Text('Aplicações e Resgates'),
       ),
       drawer: AppDrawer(),
-      body: Container(
-        width: double.infinity,
-        color: Colors.black,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          children: <Widget>[
-            InvestmentCard(),
-            InvestmentCard(),
-          ],
+      body: SingleChildScrollView(
+        child: Container(
+          height: availableHeight,
+          width: double.infinity,
+          color: Colors.black,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: <Widget>[
+              InvestmentCard(),
+              InvestmentCard(),
+            ],
+          ),
         ),
       ),
     );

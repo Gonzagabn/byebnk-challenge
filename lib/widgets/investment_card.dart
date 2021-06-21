@@ -10,6 +10,9 @@ class InvestmentCard extends StatefulWidget {
 }
 
 class _InvestmentCard extends State<InvestmentCard> {
+  GlobalKey<FormState> _form = GlobalKey();
+  double? _invData;
+
   @override
   Widget build(BuildContext context) {
     final mediaQuery = MediaQuery.of(context);
@@ -34,7 +37,7 @@ class _InvestmentCard extends State<InvestmentCard> {
           ),
         ),
         Container(
-          height: availableHeight * 0.3,
+          height: availableHeight * 0.25,
           width: availableWidth * 0.9,
           child: Card(
             margin: EdgeInsets.zero,
@@ -45,7 +48,7 @@ class _InvestmentCard extends State<InvestmentCard> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: <Widget>[
                 Text(
-                  'SALDO',
+                  'Invista Agora!',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w500,
@@ -53,11 +56,29 @@ class _InvestmentCard extends State<InvestmentCard> {
                 ),
                 Consumer<Transactions>(
                   builder: (ctx, txns, cild) {
-                    return Text(
-                      'R\$ ${txns.transactionsBalance}',
-                      style: TextStyle(
-                        fontSize: 36,
-                        color: Colors.green[600],
+                    return Form(
+                      key: _form,
+                      child: Column(
+                        children: <Widget>[
+                          Container(
+                            width: availableWidth * 0.7,
+                            child: TextFormField(
+                              decoration: InputDecoration(
+                                labelText: 'Informe o valor a ser aplicado...',
+                              ),
+                              keyboardType: TextInputType.numberWithOptions(
+                                  decimal: true),
+                              validator: (value) {
+                                if (double.parse(value!) == 0.0) {
+                                  return 'Informe um valor válido!';
+                                }
+                                return null;
+                              },
+                              onSaved: (value) =>
+                                  _invData = double.parse(value!),
+                            ),
+                          ),
+                        ],
                       ),
                     );
                   },
