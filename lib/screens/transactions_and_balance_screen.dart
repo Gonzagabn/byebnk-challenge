@@ -1,5 +1,6 @@
 import 'package:byebnk_app/utils/app_routes.dart';
 import 'package:byebnk_app/widgets/app_drawer.dart';
+import 'package:byebnk_app/widgets/balance_card.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:byebnk_app/providers/transactions.dart';
@@ -10,49 +11,84 @@ class TransactionsAndBalanceScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final mediaQuery = MediaQuery.of(context);
+    final availableHeight = mediaQuery.size.height -
+        mediaQuery.padding.top -
+        AppBar().preferredSize.height;
+    final availableWidth = mediaQuery.size.width;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('Movimentações e Saldo'),
       ),
       drawer: AppDrawer(),
-      body: FutureBuilder(
-        future: Provider.of<Transactions>(context, listen: false)
-            .loadTransactions(),
-        builder: (ctx, snapshot) {
-          if (snapshot.connectionState == ConnectionState.waiting) {
-            return Center(
-              child: CircularProgressIndicator(color: Colors.black),
-            );
-          } else if (snapshot.hasError) {
-            return AlertDialog(
-              title: Text('Ocorreu um erro!'),
-              content: Text('Ocorreu um erro FAKE!'),
-              actions: <Widget>[
-                TextButton(
-                  child: Text('Fechar'),
-                  onPressed: () {
-                    Navigator.of(context)
-                        .pushReplacementNamed(AppRoutes.TXNS_BAL);
-                  },
-                )
-              ],
-            );
-          } else {
-            return Consumer<Transactions>(
-              builder: (ctx, txns, cild) {
-                return ListView.builder(
-                  itemCount: txns.transactionsCount,
-                  itemBuilder: (ctx, index) => Column(
-                    children: <Widget>[
-                      TransactionItem(txns.transactions[index]),
-                      Divider(),
-                    ],
-                  ),
-                );
-              },
-            );
-          }
-        },
+      body: Column(
+        children: [
+          Container(
+            color: Colors.black,
+            height: availableHeight * 0.2,
+            child: Center(child: BalanceCard()),
+          ),
+          Container(
+            color: Colors.black,
+            height: availableHeight * 0.05,
+            child: Center(
+              child: Text(
+                'Transações Recentes',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white,
+                ),
+              ),
+            ),
+          ),
+          SingleChildScrollView(
+            child: Container(
+              height: availableHeight * 0.75,
+              width: double.infinity,
+              child: FutureBuilder(
+                future: Provider.of<Transactions>(context, listen: false)
+                    .loadTransactions(),
+                builder: (ctx, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(
+                      child: CircularProgressIndicator(color: Colors.black),
+                    );
+                  } else if (snapshot.hasError) {
+                    return AlertDialog(
+                      title: Text('Ocorreu um erro!'),
+                      content: Text('Ocorreu um erro FAKE!'),
+                      actions: <Widget>[
+                        TextButton(
+                          child: Text('Fechar'),
+                          onPressed: () {
+                            Navigator.of(context)
+                                .pushReplacementNamed(AppRoutes.TXNS_BAL);
+                          },
+                        )
+                      ],
+                    );
+                  } else {
+                    return Consumer<Transactions>(
+                      builder: (ctx, txns, cild) {
+                        return ListView.builder(
+                          itemCount: txns.transactionsCount,
+                          itemBuilder: (ctx, index) => Column(
+                            children: <Widget>[
+                              TransactionItem(txns.transactions[index]),
+                              Divider(),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  }
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }
