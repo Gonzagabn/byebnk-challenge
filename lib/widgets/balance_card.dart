@@ -24,6 +24,30 @@ class _BalanceCardState extends State<BalanceCard> {
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(10.0),
         ),
+        child: Column(
+          children: <Widget>[
+            SizedBox(
+              height: availableHeight * 0.01,
+            ),
+            Text(
+              'SALDO',
+              style: TextStyle(
+                fontSize: 24,
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            SizedBox(
+              height: availableHeight * 0.02,
+            ),
+            Text(
+              'R\$ 28.237,00',
+              style: TextStyle(
+                fontSize: 36,
+                color: Colors.green[600],
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
