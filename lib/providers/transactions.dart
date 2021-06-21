@@ -7,7 +7,7 @@ import 'package:http/http.dart' as http;
 
 class Transaction {
   final String type;
-  final String date;
+  final DateTime date;
   final double value;
 
   Transaction({
