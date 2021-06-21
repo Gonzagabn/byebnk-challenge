@@ -17,20 +17,29 @@ class TransactionItem extends StatelessWidget {
       leading: Text(
         DateFormat('d MMM yy').format(transaction.date),
         style: TextStyle(
-          fontSize: 18,
-          fontWeight: FontWeight.w500,
           color: Colors.grey[500],
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
         ),
       ),
       title: Text(
         'R\$ ${transaction.value.toStringAsFixed(2)}',
         style: TextStyle(
-          fontSize: 18,
+          fontSize: 16,
           fontWeight: FontWeight.w500,
         ),
         textAlign: TextAlign.center,
       ),
-      trailing: Text(_firstInCaps(transaction.type)),
+      trailing: Text(
+        _firstInCaps(transaction.type),
+        style: TextStyle(
+          color: transaction.type == 'aplicacao'
+              ? Colors.green[600]
+              : Colors.red[900],
+          fontSize: 16,
+          fontWeight: FontWeight.w500,
+        ),
+      ),
     );
   }
 }
