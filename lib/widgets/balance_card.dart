@@ -12,7 +12,6 @@ class BalanceCard extends StatefulWidget {
 class _BalanceCardState extends State<BalanceCard> {
   @override
   Widget build(BuildContext context) {
-    Transactions transactions = Provider.of(context, listen: false);
     final mediaQuery = MediaQuery.of(context);
     final availableHeight = mediaQuery.size.height -
         mediaQuery.padding.top -
@@ -37,12 +36,16 @@ class _BalanceCardState extends State<BalanceCard> {
                 fontWeight: FontWeight.w500,
               ),
             ),
-            Text(
-              'R\$ ${transactions.transactionsBalance}',
-              style: TextStyle(
-                fontSize: 36,
-                color: Colors.green[600],
-              ),
+            Consumer<Transactions>(
+              builder: (ctx, txns, cild) {
+                return Text(
+                  'R\$ ${txns.transactionsBalance}',
+                  style: TextStyle(
+                    fontSize: 36,
+                    color: Colors.green[600],
+                  ),
+                );
+              },
             ),
           ],
         ),

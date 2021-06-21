@@ -49,10 +49,10 @@ class Transactions with ChangeNotifier {
     return _sumReds;
   }
 
-  double get transactionsBalance {
+  String get transactionsBalance {
     double _transactionsBalance =
         getInvsSum(_transactions) - getRedsSum(_transactions);
-    return _transactionsBalance;
+    return _transactionsBalance.toStringAsFixed(2);
   }
 
   Future<void> loadTransactions() async {
