@@ -23,10 +23,26 @@ class Transactions with ChangeNotifier {
 
   Transactions([this._token, this._transactions = const []]);
 
-  List<Transaction> get transactions => [..._transactions];
+  List<Transaction> get transactions =>
+      _orderByDate([..._transactions]).reversed.toList();
 
   int get transactionsCount {
     return _transactions.length;
+  }
+
+  String get transactionsBalance {
+    double _transactionsBalance =
+        getInvsSum(_transactions) - getRedsSum(_transactions);
+    return _transactionsBalance.toStringAsFixed(2);
+  }
+
+  List<Transaction> _orderByDate(List<Transaction> txns) {
+    txns.sort((a, b) {
+      var aDate = a.date;
+      var bDate = b.date;
+      return aDate.compareTo(bDate);
+    });
+    return txns;
   }
 
   double getInvsSum(List<Transaction> txns) {
@@ -47,12 +63,6 @@ class Transactions with ChangeNotifier {
       }
     }
     return _sumReds;
-  }
-
-  String get transactionsBalance {
-    double _transactionsBalance =
-        getInvsSum(_transactions) - getRedsSum(_transactions);
-    return _transactionsBalance.toStringAsFixed(2);
   }
 
   Future<void> loadTransactions() async {
