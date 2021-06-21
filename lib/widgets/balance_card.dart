@@ -1,4 +1,6 @@
+import 'package:byebnk_app/providers/transactions.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class BalanceCard extends StatefulWidget {
   const BalanceCard({Key? key}) : super(key: key);
@@ -10,6 +12,7 @@ class BalanceCard extends StatefulWidget {
 class _BalanceCardState extends State<BalanceCard> {
   @override
   Widget build(BuildContext context) {
+    Transactions transactions = Provider.of(context, listen: false);
     final mediaQuery = MediaQuery.of(context);
     final availableHeight = mediaQuery.size.height -
         mediaQuery.padding.top -
@@ -35,7 +38,7 @@ class _BalanceCardState extends State<BalanceCard> {
               ),
             ),
             Text(
-              'R\$ 28.237,00',
+              'R\$ ${transactions.transactionsBalance}',
               style: TextStyle(
                 fontSize: 36,
                 color: Colors.green[600],

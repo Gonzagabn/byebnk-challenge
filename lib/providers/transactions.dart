@@ -29,6 +29,32 @@ class Transactions with ChangeNotifier {
     return _transactions.length;
   }
 
+  double getInvsSum(List<Transaction> txns) {
+    double _sumInvs = 0;
+    for (int i = 0; i < txns.length; i++) {
+      if (txns[i].type == 'aplicacao') {
+        _sumInvs += txns[i].value;
+      }
+    }
+    return _sumInvs;
+  }
+
+  double getRedsSum(List<Transaction> txns) {
+    double _sumReds = 0;
+    for (int i = 0; i < txns.length; i++) {
+      if (txns[i].type == 'resgate') {
+        _sumReds += txns[i].value;
+      }
+    }
+    return _sumReds;
+  }
+
+  double get transactionsBalance {
+    double _transactionsBalance =
+        getInvsSum(_transactions) - getRedsSum(_transactions);
+    return _transactionsBalance;
+  }
+
   Future<void> loadTransactions() async {
     List<Transaction> _loadedTransactions = [];
     final url = Uri.parse(Constants.TXNS_URL);
