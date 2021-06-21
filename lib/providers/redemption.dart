@@ -20,6 +20,8 @@ class Redemptions with ChangeNotifier {
   String? _token;
   Redemption? _redemption;
 
+  Redemptions([this._token, this._redemption]);
+
   Redemption? get redemption => _redemption;
 
   Future<void> redemptionRequest(double value) async {

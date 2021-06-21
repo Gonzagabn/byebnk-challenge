@@ -1,4 +1,5 @@
 import 'package:byebnk_app/widgets/app_drawer.dart';
+import 'package:byebnk_app/widgets/investment_card.dart';
 import 'package:flutter/material.dart';
 
 class InvestmentsAndRedemptionsScreen extends StatelessWidget {
@@ -18,11 +19,13 @@ class InvestmentsAndRedemptionsScreen extends StatelessWidget {
       ),
       drawer: AppDrawer(),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          Container(),
-          Container(),
+          InvestmentCard(),
+          InvestmentCard(),
         ],
       ),
     );
   }
 }
+//colocar snackbar anunciando o sucesso da transação
