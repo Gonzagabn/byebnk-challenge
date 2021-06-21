@@ -15,16 +15,17 @@ class TransactionItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return ListTile(
       leading: Text(
-        DateFormat('d MMM yy').format(transaction.date),
+        DateFormat('dd MMM yy').format(transaction.date),
         style: TextStyle(
-          color: Colors.grey[500],
+          color: Colors.grey[700],
           fontSize: 16,
-          fontWeight: FontWeight.w500,
         ),
       ),
       title: Text(
         'R\$ ${transaction.value.toStringAsFixed(2)}',
         style: TextStyle(
+          color:
+              transaction.type == 'aplicacao' ? Colors.black : Colors.grey[400],
           fontSize: 16,
           fontWeight: FontWeight.w500,
         ),
