@@ -53,7 +53,10 @@ class TransactionsAndBalanceScreen extends StatelessWidget {
                 ),
                 Center(
                   child: Container(
-                    color: Colors.white,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
                     height: availableHeight * 0.75,
                     width: availableWidth * 0.9,
                     child: FutureBuilder(
