@@ -1,4 +1,5 @@
 import 'package:byebnk_app/providers/auth.dart';
+import 'package:byebnk_app/providers/investment.dart';
 import 'package:byebnk_app/providers/transactions.dart';
 import 'package:byebnk_app/screens/authentication_screen.dart';
 import 'package:byebnk_app/screens/investments_and_redemptions_screen.dart';
@@ -18,6 +19,20 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider(
           create: (ctx) => new Auth(),
+        ),
+        ChangeNotifierProxyProvider<Auth, Transactions>(
+          create: (ctx) => new Transactions(),
+          update: (ctx, auth, previousTransactions) => new Transactions(
+            auth.token,
+            previousTransactions!.transactions,
+          ),
+        ),
+        ChangeNotifierProxyProvider<Auth, Investments>(
+          create: (ctx) => new Investments(),
+          update: (ctx, auth, previousInvestments) => new Investments(
+            auth.token,
+            previousInvestments!.investment,
+          ),
         ),
         ChangeNotifierProxyProvider<Auth, Transactions>(
           create: (ctx) => new Transactions(),

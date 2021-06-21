@@ -6,13 +6,23 @@ import 'package:byebnk_app/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 
-class Investment with ChangeNotifier {
-  String? _token;
-  DateTime? _date;
-  double? _value;
+class Investment {
+  DateTime date;
+  double value;
 
-  DateTime get date => _date!;
-  double get value => _value!;
+  Investment({
+    required this.date,
+    required this.value,
+  });
+}
+
+class Investments with ChangeNotifier {
+  String? _token;
+  Investment? _investment;
+
+  Investments([this._token, this._investment]);
+
+  Investment get investment => _investment!;
 
   Future<void> investmentRequest(double value) async {
     final url = Uri.parse(Constants.INV_URL);
@@ -31,8 +41,8 @@ class Investment with ChangeNotifier {
     if (response.statusCode == 500) {
       throw HttpException(response.statusCode.toString());
     } else if (data != null) {
-      _value = data['valor'];
-      _date = data['data'];
+      _investment!.value = data['valor'];
+      _investment!.date = data['data'];
     }
     notifyListeners();
 
