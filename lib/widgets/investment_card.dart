@@ -14,6 +14,7 @@ class _InvestmentCard extends State<InvestmentCard> {
   GlobalKey<FormState> _form = GlobalKey();
   bool _isLoading = false;
   Investment _invData = Investment(date: DateTime.now(), value: 0.00);
+  TextEditingController _invTextController = TextEditingController();
 
   void _showErrorDialog(String msg) {
     showDialog(
@@ -114,6 +115,7 @@ class _InvestmentCard extends State<InvestmentCard> {
                         child: Container(
                           width: availableWidth * 0.7,
                           child: TextFormField(
+                            controller: _invTextController,
                             decoration: InputDecoration(
                               labelText: 'Informe o valor a ser aplicado...',
                             ),
@@ -129,6 +131,7 @@ class _InvestmentCard extends State<InvestmentCard> {
                             onSaved: (value) {
                               _invData.value = double.parse(value!);
                               _invData.date = DateTime.now();
+                              _invTextController.clear();
                             },
                           ),
                         ),

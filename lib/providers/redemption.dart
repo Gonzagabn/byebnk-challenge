@@ -41,8 +41,8 @@ class Redemptions with ChangeNotifier {
     if (response.statusCode == 500) {
       throw HttpException(response.statusCode.toString());
     } else if (data != null) {
-      _redemption.date = data['data'];
-      _redemption.date = data['valor'];
+      _redemption.date = DateTime.parse(data['data']);
+      _redemption.value = data['valor'];
     }
     notifyListeners();
 

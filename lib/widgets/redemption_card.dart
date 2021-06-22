@@ -1,5 +1,4 @@
 import 'package:byebnk_app/exceptions/http_exceptions.dart';
-import 'package:byebnk_app/providers/investment.dart';
 import 'package:byebnk_app/providers/redemption.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +13,7 @@ class RedemptionCard extends StatefulWidget {
 class _RedemptionCard extends State<RedemptionCard> {
   GlobalKey<FormState> _form = GlobalKey();
   bool _isLoading = false;
-  Investment _redData = Investment(date: DateTime.now(), value: 0.00);
+  Redemption _redData = Redemption(date: DateTime.now(), value: 0.00);
   TextEditingController _redTextController = TextEditingController();
 
   void _showErrorDialog(String msg) {

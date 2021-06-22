@@ -4,5 +4,5 @@ class Constants {
   static const AUTH_URL = '$BASE_API_URL/login';
   static const TXNS_URL = '$BASE_API_URL/movimentacoes';
   static const INV_URL = '$BASE_API_URL/aplicacao';
-  static const RED_URL = '$BASE_API_URL/resgatepokemon';
+  static const RED_URL = '$BASE_API_URL/resgate';
 }
