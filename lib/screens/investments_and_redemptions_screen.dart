@@ -1,5 +1,6 @@
 import 'package:byebnk_app/widgets/app_drawer.dart';
 import 'package:byebnk_app/widgets/investment_card.dart';
+import 'package:byebnk_app/widgets/redemption_card.dart';
 import 'package:flutter/material.dart';
 
 class InvestmentsAndRedemptionsScreen extends StatelessWidget {
@@ -25,7 +26,7 @@ class InvestmentsAndRedemptionsScreen extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: <Widget>[
               InvestmentCard(),
-              InvestmentCard(),
+              RedemptionCard(),
             ],
           ),
         ),
