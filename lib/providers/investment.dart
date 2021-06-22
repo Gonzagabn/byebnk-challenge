@@ -41,7 +41,7 @@ class Investments with ChangeNotifier {
     if (response.statusCode == 500) {
       throw HttpException(response.statusCode.toString());
     } else if (data != null) {
-      _investment!.date = data['data'];
+      _investment!.date = DateTime.parse(data['data']);
       _investment!.value = data['valor'];
     }
     notifyListeners();
