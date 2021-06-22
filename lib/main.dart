@@ -35,10 +35,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
         ChangeNotifierProxyProvider<Auth, Redemptions>(
-          create: (_) => new Redemptions(null, null),
+          create: (_) => new Redemptions(null),
           update: (ctx, auth, previousRedemption) => new Redemptions(
             auth.token,
-            previousRedemption!.redemption,
           ),
         ),
       ],

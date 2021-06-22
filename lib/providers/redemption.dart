@@ -20,7 +20,7 @@ class Redemptions with ChangeNotifier {
   String? _token;
   Redemption? _redemption;
 
-  Redemptions(this._token, this._redemption);
+  Redemptions(this._token);
 
   Redemption? get redemption => _redemption;
 
