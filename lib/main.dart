@@ -29,10 +29,9 @@ class MyApp extends StatelessWidget {
           ),
         ),
         ChangeNotifierProxyProvider<Auth, Investments>(
-          create: (_) => new Investments(null, null),
+          create: (_) => new Investments(null),
           update: (ctx, auth, previousInvestment) => new Investments(
             auth.token,
-            previousInvestment!.investment,
           ),
         ),
         ChangeNotifierProxyProvider<Auth, Redemptions>(

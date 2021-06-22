@@ -20,7 +20,7 @@ class Investments with ChangeNotifier {
   String? _token;
   Investment? _investment;
 
-  Investments(this._token, this._investment);
+  Investments(this._token);
 
   Investment get investment => _investment!;
 
