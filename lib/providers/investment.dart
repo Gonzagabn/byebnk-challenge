@@ -18,11 +18,11 @@ class Investment {
 
 class Investments with ChangeNotifier {
   String? _token;
-  Investment? _investment;
+  Investment _investment = Investment(date: DateTime.now(), value: 0.0);
 
   Investments(this._token);
 
-  Investment get investment => _investment!;
+  Investment get investment => _investment;
 
   Future<void> investmentRequest(double value) async {
     final url = Uri.parse(Constants.INV_URL);
@@ -41,8 +41,8 @@ class Investments with ChangeNotifier {
     if (response.statusCode == 500) {
       throw HttpException(response.statusCode.toString());
     } else if (data != null) {
-      _investment!.date = DateTime.parse(data['data']);
-      _investment!.value = data['valor'];
+      _investment.date = DateTime.parse(data['data']);
+      _investment.value = data['valor'];
     }
     notifyListeners();
 
