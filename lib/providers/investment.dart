@@ -20,7 +20,7 @@ class Investments with ChangeNotifier {
   String? _token;
   Investment? _investment;
 
-  Investments([this._token, this._investment]);
+  Investments(this._token, this._investment);
 
   Investment get investment => _investment!;
 
@@ -41,8 +41,8 @@ class Investments with ChangeNotifier {
     if (response.statusCode == 500) {
       throw HttpException(response.statusCode.toString());
     } else if (data != null) {
-      _investment!.value = data['valor'];
       _investment!.date = data['data'];
+      _investment!.value = data['valor'];
     }
     notifyListeners();
 

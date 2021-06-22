@@ -20,7 +20,7 @@ class Redemptions with ChangeNotifier {
   String? _token;
   Redemption? _redemption;
 
-  Redemptions([this._token, this._redemption]);
+  Redemptions(this._token, this._redemption);
 
   Redemption? get redemption => _redemption;
 
@@ -41,8 +41,8 @@ class Redemptions with ChangeNotifier {
     if (response.statusCode == 500) {
       throw HttpException(response.statusCode.toString());
     } else if (data != null) {
-      _redemption!.date = data['valor'];
       _redemption!.date = data['data'];
+      _redemption!.date = data['valor'];
     }
     notifyListeners();
 

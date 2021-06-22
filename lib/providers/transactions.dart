@@ -21,7 +21,7 @@ class Transactions with ChangeNotifier {
   String? _token;
   List<Transaction> _transactions = [];
 
-  Transactions([this._token, this._transactions = const []]);
+  Transactions(this._token, this._transactions);
 
   List<Transaction> get transactions =>
       _orderByDate([..._transactions]).reversed.toList();

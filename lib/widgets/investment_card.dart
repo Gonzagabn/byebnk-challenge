@@ -13,7 +13,7 @@ class InvestmentCard extends StatefulWidget {
 class _InvestmentCard extends State<InvestmentCard> {
   GlobalKey<FormState> _form = GlobalKey();
   bool _isLoading = false;
-  Investment _invsData = Investment(date: DateTime.now(), value: 0.00);
+  Investment _invData = Investment(date: DateTime.now(), value: 0.00);
 
   void _showErrorDialog(String msg) {
     showDialog(
@@ -44,10 +44,10 @@ class _InvestmentCard extends State<InvestmentCard> {
 
     _form.currentState!.save();
 
-    Investments invs = Provider.of(context, listen: false);
+    Investments inv = Provider.of(context, listen: false);
 
     try {
-      await invs.investmentRequest(_invsData.value);
+      await inv.investmentRequest(_invData.value);
     } on HttpException catch (error) {
       _showErrorDialog(error.toString());
     } catch (error) {
@@ -127,8 +127,8 @@ class _InvestmentCard extends State<InvestmentCard> {
                               return null;
                             },
                             onSaved: (value) {
-                              _invsData.value = double.parse(value!);
-                              _invsData.date = DateTime.now();
+                              _invData.value = double.parse(value!);
+                              _invData.date = DateTime.now();
                             },
                           ),
                         ),
