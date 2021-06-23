@@ -1,6 +1,6 @@
 class HttpException implements Exception {
   static const Map<String, String> statusCode = {
-    '500': 'Ocorreu um erro FAKE!',
+    '500': 'Tente novamente!',
   };
   final String msg;
 
