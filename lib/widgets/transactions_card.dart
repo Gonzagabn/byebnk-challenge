@@ -39,6 +39,7 @@ class TransactionsCard extends StatelessWidget {
         } else {
           return RefreshIndicator(
             onRefresh: () => _refreshTransactions(context),
+            color: Colors.black,
             child: Consumer<Transactions>(
               builder: (ctx, txns, cild) {
                 return ListView.builder(
