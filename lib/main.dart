@@ -19,23 +19,23 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         ChangeNotifierProvider(
-          create: (_) => new Auth(),
+          create: (ctx) => new Auth(),
         ),
         ChangeNotifierProxyProvider<Auth, Transactions>(
-          create: (_) => new Transactions(null, []),
+          create: (ctx) => new Transactions(null, []),
           update: (ctx, auth, previousTransactions) => new Transactions(
             auth.token,
             previousTransactions!.transactions,
           ),
         ),
         ChangeNotifierProxyProvider<Auth, Investments>(
-          create: (_) => new Investments(null),
+          create: (ctx) => new Investments(null),
           update: (ctx, auth, previousInvestment) => new Investments(
             auth.token,
           ),
         ),
         ChangeNotifierProxyProvider<Auth, Redemptions>(
-          create: (_) => new Redemptions(null),
+          create: (ctx) => new Redemptions(null),
           update: (ctx, auth, previousRedemption) => new Redemptions(
             auth.token,
           ),
