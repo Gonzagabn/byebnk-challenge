@@ -55,6 +55,16 @@ class _RedemptionCard extends State<RedemptionCard> {
       _showErrorDialog('Ocorreu um erro inesperado!');
     }
 
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Resgate realizado com sucesso!',
+          style: TextStyle(color: Colors.amber),
+        ),
+        duration: Duration(milliseconds: 2500),
+      ),
+    );
+
     setState(() {
       _isLoading = false;
     });
@@ -84,7 +94,7 @@ class _RedemptionCard extends State<RedemptionCard> {
           ),
         ),
         Container(
-          height: availableHeight * 0.27,
+          height: availableHeight * 0.3,
           width: availableWidth * 0.9,
           child: Card(
             margin: EdgeInsets.zero,
@@ -137,7 +147,7 @@ class _RedemptionCard extends State<RedemptionCard> {
                         ),
                       ),
                       SizedBox(
-                        height: availableHeight * 0.02,
+                        height: availableHeight * 0.03,
                       ),
                       if (_isLoading)
                         CircularProgressIndicator(
@@ -160,9 +170,15 @@ class _RedemptionCard extends State<RedemptionCard> {
                               ),
                             ),
                           ),
-                          child: Text('RRESGATAR'),
+                          child: Text(
+                            'RESGATAR',
+                            style: TextStyle(color: Colors.amber),
+                          ),
                           onPressed: _submit,
                         ),
+                      SizedBox(
+                        height: availableHeight * 0.02,
+                      ),
                     ],
                   ),
                 )

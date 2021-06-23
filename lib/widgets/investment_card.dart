@@ -55,6 +55,16 @@ class _InvestmentCard extends State<InvestmentCard> {
       _showErrorDialog('Ocorreu um erro inesperado!');
     }
 
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          'Aplicação realizada com sucesso!',
+          style: TextStyle(color: Colors.lightGreenAccent[400]),
+        ),
+        duration: Duration(milliseconds: 2500),
+      ),
+    );
+
     setState(() {
       _isLoading = false;
     });
@@ -84,7 +94,7 @@ class _InvestmentCard extends State<InvestmentCard> {
           ),
         ),
         Container(
-          height: availableHeight * 0.27,
+          height: availableHeight * 0.30,
           width: availableWidth * 0.9,
           child: Card(
             margin: EdgeInsets.zero,
@@ -137,7 +147,7 @@ class _InvestmentCard extends State<InvestmentCard> {
                         ),
                       ),
                       SizedBox(
-                        height: availableHeight * 0.02,
+                        height: availableHeight * 0.03,
                       ),
                       if (_isLoading)
                         CircularProgressIndicator(
@@ -160,9 +170,16 @@ class _InvestmentCard extends State<InvestmentCard> {
                               ),
                             ),
                           ),
-                          child: Text('APLICAR'),
+                          child: Text(
+                            'APLICAR',
+                            style:
+                                TextStyle(color: Colors.lightGreenAccent[400]),
+                          ),
                           onPressed: _submit,
                         ),
+                      SizedBox(
+                        height: availableHeight * 0.02,
+                      ),
                     ],
                   ),
                 )

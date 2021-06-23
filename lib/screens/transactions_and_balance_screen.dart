@@ -19,52 +19,54 @@ class TransactionsAndBalanceScreen extends StatelessWidget {
         title: Text('Movimentações e Saldo'),
       ),
       drawer: AppDrawer(),
-      body: Column(
-        children: [
-          Container(
-            color: Colors.black,
-            height: availableHeight * 0.2,
-            child: Center(
-              child: BalanceCard(),
+      body: Container(
+        child: Column(
+          children: [
+            Container(
+              color: Colors.black,
+              height: availableHeight * 0.2,
+              child: Center(
+                child: BalanceCard(),
+              ),
             ),
-          ),
-          Container(
-            color: Colors.black,
-            height: availableHeight * 0.05,
-            child: Center(
-              child: Text(
-                'Transações Recentes',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white,
+            Container(
+              color: Colors.black,
+              height: availableHeight * 0.05,
+              child: Center(
+                child: Text(
+                  'Transações Recentes',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white,
+                  ),
                 ),
               ),
             ),
-          ),
-          SingleChildScrollView(
-            child: Stack(
-              children: <Widget>[
-                Container(
-                  color: Colors.black,
-                  height: availableHeight * 0.75,
-                  width: double.infinity,
-                ),
-                Center(
-                  child: Container(
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(10.0),
-                    ),
+            SingleChildScrollView(
+              child: Stack(
+                children: <Widget>[
+                  Container(
+                    color: Colors.black,
                     height: availableHeight * 0.75,
-                    width: availableWidth * 0.9,
-                    child: TransactionsCard(),
+                    width: double.infinity,
                   ),
-                ),
-              ],
+                  Center(
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10.0),
+                      ),
+                      height: availableHeight * 0.75,
+                      width: availableWidth * 0.9,
+                      child: TransactionsCard(),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

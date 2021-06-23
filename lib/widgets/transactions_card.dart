@@ -8,6 +8,9 @@ class TransactionsCard extends StatelessWidget {
   const TransactionsCard({
     Key? key,
   }) : super(key: key);
+  Future<void> _refreshTransactions(BuildContext context) {
+    return Provider.of<Transactions>(context, listen: false).loadTransactions();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -34,18 +37,21 @@ class TransactionsCard extends StatelessWidget {
             ],
           );
         } else {
-          return Consumer<Transactions>(
-            builder: (ctx, txns, cild) {
-              return ListView.builder(
-                itemCount: txns.transactionsCount,
-                itemBuilder: (ctx, index) => Column(
-                  children: <Widget>[
-                    TransactionItem(txns.transactions[index]),
-                    Divider(),
-                  ],
-                ),
-              );
-            },
+          return RefreshIndicator(
+            onRefresh: () => _refreshTransactions(context),
+            child: Consumer<Transactions>(
+              builder: (ctx, txns, cild) {
+                return ListView.builder(
+                  itemCount: txns.transactionsCount,
+                  itemBuilder: (ctx, index) => Column(
+                    children: <Widget>[
+                      TransactionItem(txns.transactions[index]),
+                      Divider(),
+                    ],
+                  ),
+                );
+              },
+            ),
           );
         }
       },
