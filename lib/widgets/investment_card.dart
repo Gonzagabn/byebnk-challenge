@@ -59,7 +59,9 @@ class _InvestmentCard extends State<InvestmentCard> {
       SnackBar(
         content: Text(
           'Aplicação realizada com sucesso!',
-          style: TextStyle(color: Colors.lightGreenAccent[400]),
+          style: TextStyle(
+            color: Colors.lightGreenAccent[400],
+          ),
         ),
         duration: Duration(milliseconds: 2500),
       ),
@@ -172,8 +174,9 @@ class _InvestmentCard extends State<InvestmentCard> {
                           ),
                           child: Text(
                             'APLICAR',
-                            style:
-                                TextStyle(color: Colors.lightGreenAccent[400]),
+                            style: TextStyle(
+                              color: Colors.lightGreenAccent[400],
+                            ),
                           ),
                           onPressed: _submit,
                         ),

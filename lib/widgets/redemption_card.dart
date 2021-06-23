@@ -59,7 +59,9 @@ class _RedemptionCard extends State<RedemptionCard> {
       SnackBar(
         content: Text(
           'Resgate realizado com sucesso!',
-          style: TextStyle(color: Colors.amber),
+          style: TextStyle(
+            color: Colors.amber,
+          ),
         ),
         duration: Duration(milliseconds: 2500),
       ),
@@ -172,7 +174,9 @@ class _RedemptionCard extends State<RedemptionCard> {
                           ),
                           child: Text(
                             'RESGATAR',
-                            style: TextStyle(color: Colors.amber),
+                            style: TextStyle(
+                              color: Colors.amber,
+                            ),
                           ),
                           onPressed: _submit,
                         ),
