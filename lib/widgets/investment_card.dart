@@ -15,6 +15,7 @@ class _InvestmentCard extends State<InvestmentCard> {
   bool _isLoading = false;
   Investment _invData = Investment(date: DateTime.now(), value: 0.00);
   TextEditingController _invTextController = TextEditingController();
+  final _valueFocusNode = FocusNode();
 
   void _showErrorDialog(String msg) {
     showDialog(
@@ -70,6 +71,12 @@ class _InvestmentCard extends State<InvestmentCard> {
     setState(() {
       _isLoading = false;
     });
+  }
+
+  @override
+  void dispose() {
+    _valueFocusNode.dispose();
+    super.dispose();
   }
 
   @override
@@ -133,6 +140,7 @@ class _InvestmentCard extends State<InvestmentCard> {
                             ),
                             keyboardType:
                                 TextInputType.numberWithOptions(decimal: true),
+                            focusNode: _valueFocusNode,
                             validator: (value) {
                               if (value!.isEmpty ||
                                   double.parse(value) == 0.0) {
@@ -178,7 +186,10 @@ class _InvestmentCard extends State<InvestmentCard> {
                               color: Colors.lightGreenAccent[400],
                             ),
                           ),
-                          onPressed: _submit,
+                          onPressed: () {
+                            _valueFocusNode.unfocus();
+                            _submit();
+                          },
                         ),
                       SizedBox(
                         height: availableHeight * 0.02,
